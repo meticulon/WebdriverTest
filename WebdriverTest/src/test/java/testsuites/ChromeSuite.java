@@ -24,6 +24,8 @@ public class ChromeSuite {
 
 	@Test
 	public void testNewArticle() {
+		
+		// Mike adds a new comment for test purposes
 
 		driver.get("http://meticulous-moose-1.herokuapp.com/accounts/login");
 
