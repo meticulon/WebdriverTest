@@ -91,6 +91,7 @@ public class ChromeSuite {
 		
 		// Mike adds a new comment for test purposes
 		// Mike testing push to remote
+		// After Merge comment added
 
 		driver.get("https://meticulous-moose-1.herokuapp.com/accounts/login");
 
