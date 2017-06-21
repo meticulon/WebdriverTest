@@ -27,7 +27,7 @@ public class FirefoxSuite {
 
 		Actions action = new Actions(driver);
 
-		driver.get("http://meticulous-moose-1.herokuapp.com/accounts/login");
+		driver.get("https://meticulous-moose-1.herokuapp.com/accounts/login");
 
 		// Find the element that's ID attribute is 'user_login' (Username)
 		// Enter Username on the element found by above desc.
