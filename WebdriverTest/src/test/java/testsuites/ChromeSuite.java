@@ -23,6 +23,70 @@ public class ChromeSuite {
 	private WebDriver driver;
 
 	@Test
+	public void Tester6Test() {
+		// Log in for the first time
+		driver.get("http://meticulous-moose-1.herokuapp.com/accounts/login");
+		driver.findElement(By.id("user_login")).sendKeys("meticulon_tester6");
+		driver.findElement(By.id("user_password")).sendKeys("Rigorous");
+		driver.findElement(By.className("btn-info")).click();
+		Assert.assertTrue(driver.findElement(By.className("notice")).isDisplayed(), "Failed to log in!");
+
+		// Add a blog post
+		String blogTitle = "Tester6 Blog Post!";
+		driver.get("http://meticulous-moose-1.herokuapp.com/admin/content/new");
+		driver.findElement(By.id("article_title")).sendKeys(blogTitle);
+		driver.findElement(By.id("article_body_and_extended")).sendKeys("This is a very short blog post.\n\nBut it has two lines in it!");
+		driver.findElement(By.id("category_271")).click();
+		driver.findElement(By.name("commit")).click();
+		String blogTitleXpath = "//a[text()='" + blogTitle + "']";
+		Assert.assertTrue(driver.findElement(By.xpath(blogTitleXpath)).isDisplayed(), "Failed to find the created blog post!");
+
+		// Log out
+		driver.get("http://meticulous-moose-1.herokuapp.com/accounts/logout");
+		Assert.assertTrue(driver.findElement(By.className("notice")).isDisplayed(), "Failed to log out!");
+		
+		// Check that the blog post appears
+		driver.get("http://meticulous-moose-1.herokuapp.com/");
+		Assert.assertTrue(driver.findElement(By.xpath(blogTitleXpath)).isDisplayed(), "Failed to find the blog post on the main page!");
+		
+		// Add a comment
+		driver.findElement(By.xpath(blogTitleXpath)).click();
+		driver.findElement(By.id("comment_author")).sendKeys("Tester6 Commenter");
+		driver.findElement(By.id("comment_email")).sendKeys("tester6.email@example.com");
+		driver.findElement(By.id("comment_url")).sendKeys("http://www.meticulon.com");
+		driver.findElement(By.id("comment_body")).sendKeys("Spam comments are a threat to any blog.\n\n<b>Especially if that blog permits HTML.</b>");
+		driver.findElement(By.id("form-submit-button")).click();
+		Assert.assertTrue(driver.findElement(By.xpath("//a[text()='Tester6 Commenter']")).isDisplayed(), "Failed to find the created comment!");
+		
+		// Log in and flag the comment as spam
+		driver.get("http://meticulous-moose-1.herokuapp.com/accounts/login");
+		driver.findElement(By.id("user_login")).sendKeys("meticulon_tester6");
+		driver.findElement(By.id("user_password")).sendKeys("Rigorous");
+		driver.findElement(By.className("btn-info")).click();
+		Assert.assertTrue(driver.findElement(By.className("notice")).isDisplayed(), "Failed to log in!");
+		driver.findElement(By.xpath("//a[text()='Total comments:']")).click();
+		Assert.assertTrue(driver.findElement(By.xpath("//a[text()='Tester6 Commenter']")).isDisplayed(), "Failed to find the spam comment!");
+		driver.findElement(By.xpath("//a[text()='Tester6 Commenter']/ancestor::tr//a[text()='Flag as spam']")).click();
+		try {
+			// ...because apparently Eclipse complains if a simple 2-second wait doesn't get exception handling.
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Assert.assertTrue(driver.findElement(By.xpath("//strong[text()='Tester6 Commenter']")).isDisplayed(), "Failed to flag the comment as spam!");
+		
+		// Delete the blog post and log out again
+		driver.get("http://meticulous-moose-1.herokuapp.com/admin");
+		driver.findElement(By.xpath("//a[text()='Your posts:']")).click();
+		driver.findElement(By.xpath("//tr[td//text()='Tester6 Blog Post!']//a[text()='Delete']")).click();
+		driver.findElement(By.className("btn-danger")).click();
+		Assert.assertTrue(driver.findElement(By.className("notice")).isDisplayed(), "Failed to delete the blog post!");
+		driver.get("http://meticulous-moose-1.herokuapp.com/accounts/logout");
+		Assert.assertTrue(driver.findElement(By.className("notice")).isDisplayed(), "Failed to log out at the end!");
+	}
+
+	@Test
 	public void testNewArticle() {
 		
 		// Mike adds a new comment for test purposes
