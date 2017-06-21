@@ -26,6 +26,7 @@ public class ChromeSuite {
 	public void testNewArticle() {
 		
 		// Mike adds a new comment for test purposes
+		// Mike testing push to remote
 
 		driver.get("https://meticulous-moose-1.herokuapp.com/accounts/login");
 
