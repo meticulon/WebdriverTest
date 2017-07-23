@@ -44,16 +44,15 @@ public class ChromeSuite {
 		driver.findElement(By.id("comment_body")).sendKeys("Not spam");
 		driver.findElement(By.id ("form-submit-button")).click();
 		driver.get("http://meticulous-moose-1.herokuapp.com/admin/feedback");
-		WebElement spam = driver.findElement(By.xpath(".//*[contains(text(), 'Not spam')]"));
-		driver.findElement(By.linkText("Flag as spam")).click();
+		driver.findElement(By.xpath("//a[text()='Not spam']/ancestor::tr//a[text()='Flag as spam']")).click();
 		driver.findElement(By.linkText("All Articles")).click();
 		driver.findElement(By.linkText("Test Post")).click();
 		driver.findElement(By.linkText("delete")).click();
 		driver.findElement(By.cssSelector(".btn.btn-danger")).click();
 		WebElement userMenu = driver.findElement(By.id("user_menu"));
-		Actions action = new Actions(driver);
-		action.moveToElement(userMenu).moveToElement(driver.findElement(By.xpath(".//*[@id='user_menu']/li[3]/a")))
-				.click().build().perform();
+		//Actions action = new Actions(driver);
+		//action.moveToElement(userMenu).moveToElement(driver.findElement(By.xpath(".//*[@id='user_menu']/li[3]/a")))
+		//		.click().build().perform();
 		
 		
 	}
