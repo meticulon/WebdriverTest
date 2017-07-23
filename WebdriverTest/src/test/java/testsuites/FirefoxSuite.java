@@ -25,7 +25,7 @@ public class FirefoxSuite {
 	@Test
 	public void testNewArticle() {
 		
-		// Mike added this comment to demo git index / commit / push
+		// Mike modifued this comment to demo git index / commit / push
 
 		Actions action = new Actions(driver);
 
