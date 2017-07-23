@@ -22,7 +22,7 @@ public class ChromeSuite {
 
 	private WebDriver driver;
 
-	@Test
+/*	@Test
 	public void Tester6Test() {
 		// Log in for the first time
 		driver.get("http://meticulous-moose-1.herokuapp.com/accounts/login");
@@ -85,7 +85,9 @@ public class ChromeSuite {
 		driver.get("http://meticulous-moose-1.herokuapp.com/accounts/logout");
 		Assert.assertTrue(driver.findElement(By.className("notice")).isDisplayed(), "Failed to log out at the end!");
 	}
-
+*/ 
+	
+/*	
 	@Test
 	public void M7Test() {
 
@@ -167,7 +169,8 @@ public class ChromeSuite {
 		driver.get("http://meticulous-moose-1.herokuapp.com/accounts/logout");		
 		
 	}
-	
+*/
+
 	@Test
 	public void testNewArticle() {
 		
