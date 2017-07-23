@@ -87,6 +87,88 @@ public class ChromeSuite {
 	}
 
 	@Test
+	public void M7Test() {
+
+		driver.get("http://meticulous-moose-1.herokuapp.com/accounts/login");
+		
+		WebElement parentLogin = driver.findElement(By.tagName("form"));
+		parentLogin.findElement(By.id("user_login")).sendKeys("meticulon_tester7");
+		parentLogin.findElement(By.id("user_password")).sendKeys("Rigorous");
+		parentLogin.findElement(By.name("login")).click();
+	
+		WebElement articleElement = driver.findElement(By.linkText("New Article"));
+		articleElement.click();
+		
+		WebElement parentLeft = driver.findElement(By.className("editor-left"));
+		parentLeft.findElement(By.name("article[title]")).sendKeys("Ra!");
+		parentLeft.findElement(By.id("article_body_and_extended")).sendKeys("From the primal chaos Ra spoke his name, thereby creating himself.");
+		//Assert here to confirm article visible in admin panel
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		WebElement parentRight = driver.findElement(By.className("editor-right"));
+		parentRight.findElement(By.id("category_1")).click();
+		parentRight.findElement(By.name("commit")).click();
+		
+		driver.get("http://meticulous-moose-1.herokuapp.com");
+		
+		try {
+			WebElement articleTitle = driver.findElement(By.linkText("Ra!"));
+			Assert.assertTrue(articleTitle.isDisplayed());	
+		}
+		//This finally should be a catch
+		finally {
+		}
+		
+		WebElement articleTitle = driver.findElement(By.linkText("Ra!"));
+		articleTitle.click();
+		
+		WebElement parentComment = driver.findElement(By.id("commentform"));
+		parentComment.findElement(By.id("comment_author")).sendKeys("Ptah");
+		parentComment.findElement(By.id("comment_email")).sendKeys("ptah@heliopolis.com");
+		parentComment.findElement(By.id("comment_url")).sendKeys("https://en.wikipedia.org/wiki/Ptah");
+		parentComment.findElement(By.id("comment_body")).sendKeys("Yeah, sure you were buddy. We all know what /really/ happened.");
+		parentComment.findElement(By.id("form-submit-button")).click();
+		//Assert here to confirm comment
+		
+		driver.get("http://meticulous-moose-1.herokuapp.com/admin/content");
+		
+		WebElement parentFind = driver.findElement(By.name("search[searchstring]"));
+		parentFind.sendKeys("ra!");
+		WebElement parentSearch = driver.findElement(By.name("commit"));
+		parentSearch.click();
+		WebElement spamParent = driver.findElement(By.id("articleList"));
+		spamParent.findElement(By.linkText("1")).click();
+		
+		WebElement parentSpam = driver.findElement(By.linkText("Flag as spam"));
+		parentSpam.click();
+		
+		//Assert here rather than sleep to visually confirm spam flag
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		driver.get("http://meticulous-moose-1.herokuapp.com/admin/content");
+		
+		WebElement deletionParent = driver.findElement(By.id("articleList"));
+		deletionParent.findElement(By.linkText("Ra!")).click();
+		WebElement deletionRight = driver.findElement(By.className("editor-right"));
+		deletionRight.findElement(By.linkText("delete")).click();
+		WebElement deletionFinal = driver.findElement(By.xpath(".//*[@class='btn btn-danger']"));
+		deletionFinal.click();
+		//Assert here to confirm deletion
+		
+		driver.get("http://meticulous-moose-1.herokuapp.com/accounts/logout");		
+		
+	}
+	
+	@Test
 	public void testNewArticle() {
 		
 		// Mike adds a new comment for test purposes
