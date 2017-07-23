@@ -1,5 +1,7 @@
 package testsuites;
 
+import static org.testng.Assert.assertTrue;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -22,6 +24,40 @@ public class ChromeSuite {
 
 	private WebDriver driver;
 
+	@Test
+	public void KarinasTest() {
+
+		driver.get("http://meticulous-moose-1.herokuapp.com/accounts/login");
+		driver.findElement(By.id("user_login")).sendKeys("meticulon_tester1");
+		driver.findElement(By.id("user_password")).sendKeys("Rigorous");
+		driver.findElement(By.name("login")).click();
+		driver.findElement(By.linkText("write a post")).click();
+		driver.findElement(By.id ("category_271")).click();
+		driver.findElement(By.id("article_title")).sendKeys("Test Post");
+		driver.findElement(By.name("commit")).click();
+		driver.get("http://meticulous-moose-1.herokuapp.com/");
+		WebElement testPost = driver.findElement(By.xpath(".//*[contains(text(), 'Test Post')]"));
+		assertTrue(testPost.isDisplayed());
+		driver.findElement(By.linkText("Test Post")).click();
+		driver.findElement(By.id("comment_author")).sendKeys("Testposter");
+		driver.findElement(By.id("comment_email")).sendKeys("qelewe@amail.club");
+		driver.findElement(By.id("comment_body")).sendKeys("Not spam");
+		driver.findElement(By.id ("form-submit-button")).click();
+		driver.get("http://meticulous-moose-1.herokuapp.com/admin/feedback");
+		WebElement spam = driver.findElement(By.xpath(".//*[contains(text(), 'Not spam')]"));
+		driver.findElement(By.linkText("Flag as spam")).click();
+		driver.findElement(By.linkText("All Articles")).click();
+		driver.findElement(By.linkText("Test Post")).click();
+		driver.findElement(By.linkText("delete")).click();
+		driver.findElement(By.cssSelector(".btn.btn-danger")).click();
+		WebElement userMenu = driver.findElement(By.id("user_menu"));
+		Actions action = new Actions(driver);
+		action.moveToElement(userMenu).moveToElement(driver.findElement(By.xpath(".//*[@id='user_menu']/li[3]/a")))
+				.click().build().perform();
+		
+		
+	}
+	
 /*	@Test
 	public void Tester6Test() {
 		// Log in for the first time
